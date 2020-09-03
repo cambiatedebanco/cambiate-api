@@ -5,7 +5,7 @@ const cla_ceo_insert_cotizacion = () => {
     let query = `insert into "bd_analitica".cla_ceo_micartera_campanas(rut, rutint, nombre, phone_number, email, created_time, fecha,  
           platform, origen, monto, ruta, "timestamp", periodo_carga, activo,hipoteca,credito,tarjeta,destino,idcampana)
     values ($1, $2, $3, $4, $5, $6, $7, 'cb', $8, $9,    
-        $10, $11, $12,  $13, 1, $14,$15,$16,20)
+        $10, $11, $12,   1,$13,$14, $15,$16,20)
     `
 
 
@@ -25,6 +25,7 @@ const getLeadsColaborador = (rut_colaborador, nuevo, gestionado, fechaInicio, fe
     and l.activo = 1
     and c.eslead = true
     order by l.fecha desc, l.probabilidad desc`, rut_colaborador, nuevo, gestionado, fechaInicio, fechaFin);
+    console.log(query);
     return query;
 }
 
@@ -43,6 +44,7 @@ const getLeadsSupervisor = (rut_colaborador, nuevo, gestionado, fechaInicio, fec
     and l.activo = 1
     and c.eslead = true
     order by l.fecha desc, l.probabilidad desc`, rut_colaborador, nuevo, gestionado, fechaInicio, fechaFin);
+    console.log(query);
     return query;
 }
 

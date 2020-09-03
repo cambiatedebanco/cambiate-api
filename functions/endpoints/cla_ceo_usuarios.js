@@ -156,6 +156,7 @@ const insertClaCeoUsuario = (request, response) => {
 
 const deleteClaCeoUsuario = (request, response) => {
     let rut_persona = request.query.id
+    console.log(rut_persona);
     if (typeof rut_persona === 'undefined') {
         throw new Error('Parametro id requerido')
     }
@@ -165,15 +166,17 @@ const deleteClaCeoUsuario = (request, response) => {
                 return result.rows[0].email;
             }
             return false;
-        }).then(result_email => {
-            if (result_email) {
-                checkUserInFirebase(result_email);
-            }
-            return false;
         })
         .then(result => {
             return conn.executeQuery(queries_usuario.delete_usuario(rut_persona))
-        }).then(
+        }).
+    then(result_email => {
+        if (result_email) {
+            checkUserInFirebase(result_email);
+        }
+        return false;
+    }).
+    then(
             _ => { return response.status(200).json({}) }
         )
         .catch(err => {

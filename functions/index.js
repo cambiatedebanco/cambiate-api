@@ -101,7 +101,7 @@ app.get('/comuna_pos/:id', db.getComunaPos);
 app.get('/contagios_covid/:id', db.getContagiosCovid);
 app.get('/cla_usuarios', db.getClaCeoUsuarios);
 app.get('/cla_usuario', endpoints_usuario.getClaCeoUsuario);
-app.delete('/cla_usuario', login.checkIfAuth, endpoints_usuario.deleteClaCeoUsuario);
+app.delete('/cla_usuario', endpoints_usuario.deleteClaCeoUsuario);
 app.post('/cla_usuario', endpoints_usuario.insertClaCeoUsuario);
 app.put('/cla_usuario', [check('rut', 'Largo del rut deberia tener entre 10 a caracteres')
     .isLength({ min: 7, max: 10 }),

@@ -961,7 +961,8 @@ const insertCotizacion = (request, response) => {
             tarjeta = 1
         }
 
-        let values = [body.rut, String(body.rut).substring(0, String(body.rut).length - 2), body.nombre, body.telefono, body.email, body.created_time, body.fecha, body.idbanco, body.deuda, body.archivo, body.timestamp, body.periodo,
+        let values = [body.rut, String(body.rut).substring(0, String(body.rut).length - 2), body.nombre, body.telefono,
+            body.email, body.created_time, body.fecha, body.idbanco, body.deuda, body.archivo, body.timestamp, body.periodo,
             hipoteca, credito, tarjeta, arrBancos[i]
         ];
 
