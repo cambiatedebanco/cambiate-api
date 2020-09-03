@@ -831,7 +831,7 @@ const updateClaCeoUsuario = (request, response) => {
     let body = request.body;
     values = [body.nombres, body.apellido_materno,
             body.apellido_paterno, body.puesto_real, body.es_ejecutivo, body.sucursal, body.nivel_acceso, body.usuario_actualiza,
-            body.id_cargo, body.rut
+            body.id_cargo, body.idbanco, body.rut
         ]
         // check if rut..
         // validaciones 

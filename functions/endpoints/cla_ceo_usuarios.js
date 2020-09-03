@@ -13,9 +13,8 @@ const insertClaCeoUsuario = (request, response) => {
     values = [
         body.rut, body.email, body.nombres, body.apellido_paterno, body.apellido_materno,
         body.puesto_real, body.es_ejecutivo, body.sucursal, body.nivel_acceso, body.marca_vigencia,
-        body.dv, body.fecha_actualizacion, body.usuario_actualiza, body.id_cargo, body.idbanco, body.banco
+        body.dv, body.fecha_actualizacion, body.usuario_actualiza, body.id_cargo, body.idbanco
     ]
-    console.log(values);
     return conn.executeQuery(queries_usuario.insert_usuario(), values)
         .then(result => {
             if (!body.es_caja) {
