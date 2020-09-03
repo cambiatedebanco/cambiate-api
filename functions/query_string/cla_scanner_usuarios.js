@@ -11,7 +11,7 @@ const get_usuarios_by_rut = () => {
 
 const get_usuarios_by_email = () => {
     let query = `select rut, dv, nombres, apellido_paterno, apellido_materno, 
-    email, es_ejecutivo, activo, cargo, fecha_creacion, fecha_actualizacion, sucursal, nivel_acceso, puesto_real,id_cargo from "bd_analitica".cla_ceo_usuarios
+    email, es_ejecutivo, activo, cargo, fecha_creacion, fecha_actualizacion, sucursal, nivel_acceso, puesto_real,id_cargo, idbanco from "bd_analitica".cla_ceo_usuarios
     where UPPER(email) = UPPER($1)
     `
 
@@ -57,8 +57,8 @@ const update_usuario = () => {
 const insert_usuario = () => {
     let query = `insert into "bd_analitica".cla_ceo_usuarios(
         rut, email, nombres, apellido_paterno, apellido_materno, puesto_real, es_ejecutivo, sucursal, nivel_acceso, marca_vigencia,
-        dv, fecha_actualizacion, usuario_actualiza, id_cargo) values(
-            $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14
+        dv, fecha_actualizacion, usuario_actualiza, id_cargo, idbanco, banco) values(
+            $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14, $15, $16
         )`
     return query;
 }

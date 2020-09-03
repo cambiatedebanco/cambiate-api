@@ -14,6 +14,8 @@ const endpoints_tam = require('./endpoints/cla_ceo_tam')
 const endpoints_us_suc = require('./endpoints/usuario_sucursal')
 const endpoints_usuario = require('./endpoints/cla_ceo_usuarios')
 const endpoints_sucursal = require('./endpoints/cla_ceo_sucursal')
+const endpoints_cambiate = require('./endpoints/cambiate_leads')
+const endpoints_cb_creditos = require('./endpoints/cb_creditos')
 
 const login = require('./login');
 const helmet = require('helmet');
@@ -98,10 +100,10 @@ app.get('/vulnerabilidad_comuna_col/:id', db.getVulnerabilidadComunaColaborador)
 app.get('/comuna_pos/:id', db.getComunaPos);
 app.get('/contagios_covid/:id', db.getContagiosCovid);
 app.get('/cla_usuarios', db.getClaCeoUsuarios);
-app.get('/cla_usuario', login.checkIfAuth, endpoints_usuario.getClaCeoUsuario);
+app.get('/cla_usuario', endpoints_usuario.getClaCeoUsuario);
 app.delete('/cla_usuario', login.checkIfAuth, endpoints_usuario.deleteClaCeoUsuario);
-app.post('/cla_usuario', login.checkIfAuth, endpoints_usuario.insertClaCeoUsuario);
-app.put('/cla_usuario', login.checkIfAuth, [check('rut', 'Largo del rut deberia tener entre 10 a caracteres')
+app.post('/cla_usuario', endpoints_usuario.insertClaCeoUsuario);
+app.put('/cla_usuario', [check('rut', 'Largo del rut deberia tener entre 10 a caracteres')
     .isLength({ min: 7, max: 10 }),
     check('nombres', 'Largo de nombres debiera ser entre 5 a 10 caracteres')
     .isLength({ min: 2, max: 30 }),
@@ -164,8 +166,8 @@ app.get('/cla_sucursal/v2', login.checkIfAuth, db.getSucursales)
 app.get('/cla_sucursal/v2/enabled', login.checkIfAuth, db.getSucursalDisponible)
 app.put('/cla_sucursal/v2/enabled', login.checkIfAuth, endpoints_us_suc.updateSucursalDestino)
 
-app.get('/cla_ceo_sucursal/like', login.checkIfAuth, endpoints_sucursal.getSucursalLike)
-app.get('/cla_ceo_roles', login.checkIfAuth, db.getRoles)
+app.get('/cla_ceo_sucursal/like', endpoints_sucursal.getSucursalLike)
+app.get('/cla_ceo_roles', db.getRoles)
 
 app.get('/cla_ceo_estados_leads', login.checkIfAuth, db.getEstadosLeads)
 app.put('/cla_base_mensual', login.checkIfAuth, db.updateGestionBaseLead);
@@ -207,6 +209,14 @@ app.post("/apiFlow/create_email", db.create_email);
 app.get('/planes/:isapre/:tipo', db.getPlanes);
 app.get('/cla_bancos', db.getBancos);
 app.post('/cla_cotizacion', db.insertCotizacion);
+
+app.get('/cambiate_leads/banco', endpoints_cambiate.getLeadByBanco);
+app.put('/cambiate_leads/asigna', endpoints_cambiate.updateAsignLeads);
+
+app.get('/cambiate/creditos', endpoints_cb_creditos.getCreditosByRut);
+app.put('/cambiate/creditos', endpoints_cb_creditos.updateCreditos);
+
+
 
 app.listen(port, () => {
     console.log(`App running on port ${port}.`);
