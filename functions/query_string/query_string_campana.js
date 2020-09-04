@@ -156,7 +156,16 @@ const getCampanasBySupervisor = () => {
 const getBancos = () => {
     let query = `SELECT idbanco, nombre
 FROM bd_analitica.cla_ceo_banco
-where esactivo=True
+where esactivo=True and idbanco<>$1
+order by orden`;
+    return query
+
+}
+
+const getBancosAll = () => {
+    let query = `SELECT idbanco, nombre
+FROM bd_analitica.cla_ceo_banco
+where esactivo=True 
 order by orden`;
     return query
 
@@ -185,5 +194,6 @@ module.exports = {
     getCampanasByColaborador,
     updateLeadsByColaborador,
     getCampanasBySupervisor,
-    getBancos
+    getBancos,
+    getBancosAll
 }

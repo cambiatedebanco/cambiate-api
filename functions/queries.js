@@ -923,15 +923,31 @@ const getSupervisoresByCampain = (request, response) => {
 }
 
 const getBancos = (request, response) => {
+    let id = request.query.id;
+    if (typeof id === 'undefined') {
+        conn.executeQuery(queries_campana.getBancosAll())
+            .then(result => {
+                return response.status(200).json(result.rows)
+            })
+            .catch(err => {
+                console.error(err);
+                return response.status(500).send(err)
+            })
+    } else {
 
-    conn.executeQuery(queries_campana.getBancos())
-        .then(result => {
-            return response.status(200).json(result.rows)
-        })
-        .catch(err => {
-            console.error(err);
-            return response.status(500).send(err)
-        })
+        conn.executeQuery(queries_campana.getBancos(), [id])
+            .then(result => {
+                return response.status(200).json(result.rows)
+            })
+            .catch(err => {
+                console.error(err);
+                return response.status(500).send(err)
+            });
+
+    }
+
+
+
 }
 
 
