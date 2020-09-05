@@ -156,7 +156,7 @@ const insertClaCeoUsuario = (request, response) => {
 
 const deleteClaCeoUsuario = (request, response) => {
     let rut_persona = request.query.id
-    console.log(rut_persona);
+
     if (typeof rut_persona === 'undefined') {
         throw new Error('Parametro id requerido')
     }

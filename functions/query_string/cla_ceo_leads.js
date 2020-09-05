@@ -25,7 +25,7 @@ const getLeadsColaborador = (rut_colaborador, nuevo, gestionado, fechaInicio, fe
     and l.activo = 1
     and c.eslead = true
     order by l.fecha desc, l.probabilidad desc`, rut_colaborador, nuevo, gestionado, fechaInicio, fechaFin);
-    console.log(query);
+
     return query;
 }
 
@@ -87,8 +87,8 @@ const getLeadsPropensosSupervisor = (rut_colaborador, fechaInicio, fechaFin) => 
 const getLeadById = () => {
     let query = `select
 	l.id, l.created_time,l.rut,l.nombre,l.comuna,l.id_region,l.phone_number,l.email,
-    l.id_estado,l.monto_cursado,l.observaciones,l.rut_colaborador,l.email_colaborador,l.idcampana, 
-    c.nombre as nombre_campana, l.nuevo, l.gestionado, l.comuna
+    l.id_estado,l.monto,l.observaciones,l.rut_colaborador,l.email_colaborador,l.idcampana, 
+    c.nombre as nombre_campana, l.nuevo, l.gestionado, l.comuna, l.timestamp, l.rutint
     from bd_analitica.cla_ceo_micartera_campanas l inner join  bd_analitica.cla_ceo_campana c
 	on (l.idcampana = c.idcampana)
     where l.id = $1
@@ -190,7 +190,7 @@ const updateLead = () => {
     let query = `update "bd_analitica".cla_ceo_micartera_campanas set 
       id_estado = $1, email = $2, nombre = $3, phone_number = $4, rut = $5,
       observaciones = $6, nuevo = $7, gestionado = $8, rut_colaborador = $9,  comuna = $10,
-      email_colaborador = $11, fecha_gestion = $12, monto_cursado = $13, id_region = $14, accion = 'U'
+      email_colaborador = $11, fecha_gestion = $12, monto = $13, id_region = $14, accion = 'U'
      where id = $15`
 
     return query;

@@ -1635,7 +1635,7 @@ const updateLead = (request, response) => {
             values.comuna,
             values.email_colaborador,
             values.fecha_gestion,
-            values.monto_cursado,
+            values.monto,
             values.id_region,
             values.id
         ])
