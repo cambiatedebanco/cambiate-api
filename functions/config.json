@@ -1,8 +1,8 @@
 {
-    "apiKey": "67D94CF6-9011-401A-8D90-8E79C7D4L6E0",
-    "secretKey": "176c97ad777058ccc3b6b7f04937cc310352c051",
+    "apiKey": "468CFF5E-78B9-4EFC-B4C5-1L201A76688D",
+    "secretKey": "144b5ca16ee8dd5e03bdf04242633b868a3109b4",
     "apiURL": "https://sandbox.flow.cl/api",
-    "baseURL_api": "https://us-central1-fenix-cp-286516.cloudfunctions.net/apifenix/apiFlow",
-    "baseURL_crm": "https://comparamas.cl/#"
+    "baseURL_api": "https://us-central1-graphite-maker-287716.cloudfunctions.net/apifenix",
+    "baseURL_crm": "https://cambiatedebanco.cl/#"
 
 }
