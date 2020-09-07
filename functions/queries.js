@@ -13,7 +13,7 @@ const config = require('./config.json');
 const queries_micartera = require('./query_string/cla_ceo_micartera');
 const queries_vista_usuario = require('./query_string/cla_ceo_vista_cartera');
 const { validationResult } = require('express-validator');
-
+const endpoints_cb_flow = require('./endpoints/cb_flow')
 
 
 const ROL_AGENTE = 2;
@@ -1783,19 +1783,20 @@ const getLeads_total = (request, response) => {
 }
 
 const create_order = async(req, res) => {
+    const { email, rut, rutint, monto } = req.body;
 
     try {
         const optional = {
-            rut: "9999999-9",
-            otroDato: "otroDato"
+            rut: rut,
+            rutInt: rutint
         };
         // Prepara el arreglo de datos
         const params = {
             commerceOrder: Math.floor(Math.random() * (2000 - 1100 + 1)) + 1100,
-            subject: "Pago de prueba",
+            subject: "Pago Compra de Créditos",
             currency: "CLP",
-            amount: 5000,
-            email: "efuentealba@json.cl",
+            amount: monto,
+            email: email,
             paymentMethod: 9,
             urlConfirmation: config.baseURL_api + "/payment_confirm",
             urlReturn: config.baseURL_crm + "/success",
@@ -1832,6 +1833,10 @@ const payment_confirm = async(req, res) => {
         let response = await flowApi.send(serviceName, params, "GET");
         //Actualiza los datos en su sistema
         console.log(response);
+
+        let respInsert = await endpoints_cb_flow.insert_payment(response)
+
+
         res.json(response);
     } catch (error) {
         res.json({ error });
