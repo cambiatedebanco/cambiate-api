@@ -8,7 +8,7 @@ const insert_payment = (request, response) => {
     values = [
         body.flowOrder, body.commerceOrder, body.requestDate, body.status, body.subject, body.currency, body.amount, body.payer, body.merchantId, body.pending_info.media,
         body.pending_info.date, body.paymentData.date, body.paymentData.media, body.paymentData.conversionDate, body.paymentData.conversionRate, body.paymentData.amount, body.paymentData.currency,
-        body.paymentData.fee, body.paymentData.balance, body.paymentData.transferDate, body.optional.rut, body.optional.rutint, body.paymentData.taxes
+        body.paymentData.fee, body.paymentData.balance, body.paymentData.transferDate, body.optional, body.optional, body.paymentData.taxes
     ]
     return conn.executeQuery(queries_cb_flow.insert_payment(), values).then(result => {
             return response.status(200).send(result.rows)
