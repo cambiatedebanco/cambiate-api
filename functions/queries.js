@@ -13,7 +13,7 @@ const config = require('./config.json');
 const queries_micartera = require('./query_string/cla_ceo_micartera');
 const queries_vista_usuario = require('./query_string/cla_ceo_vista_cartera');
 const { validationResult } = require('express-validator');
-const endpoints_cb_flow = require('./endpoints/cb_flow')
+const queries_cb_flow = require('./query_string/cb_flow')
 
 
 const ROL_AGENTE = 2;
@@ -1833,11 +1833,23 @@ const payment_confirm = async(req, res) => {
         let response = await flowApi.send(serviceName, params, "GET");
         //Actualiza los datos en su sistema
         console.log(response);
+        let body = response;
+        console.log('body ==> ', body);
 
-        let respInsert = await endpoints_cb_flow.insert_payment(response)
+        values = [
+            body.flowOrder, body.commerceOrder, body.requestDate, body.status, body.subject, body.currency, body.amount, body.payer, body.merchantId, body.pending_info.media,
+            body.pending_info.date, body.paymentData.date, body.paymentData.media, body.paymentData.conversionDate, body.paymentData.conversionRate, body.paymentData.amount, body.paymentData.currency,
+            body.paymentData.fee, body.paymentData.balance, body.paymentData.transferDate, body.optional, body.optional, body.paymentData.taxes
+        ]
 
+        await conn.executeQuery(queries_cb_flow.insert_payment(), values).then(result => {
+                return res.status(200).send(result.rows)
+            })
+            .catch(error => {
+                console.error(error);
+                return res.status(500).send('Algo salio mal')
+            })
 
-        res.json(response);
     } catch (error) {
         res.json({ error });
     }
