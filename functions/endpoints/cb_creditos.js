@@ -23,4 +23,15 @@ const updateCreditos = (request, response) => {
         })
 }
 
-module.exports = { getCreditosByRut, updateCreditos }
+
+const getConfiguradorOferta = (request, response) => {
+    conn.executeQuery(queries_cb_creditos.getConfiguradorOferta()).
+    then(result => {
+        return response.status(200).json(result.rows)
+    }).catch(error => {
+        return response.status(500).json(error)
+    })
+}
+
+
+module.exports = { getCreditosByRut, updateCreditos, getConfiguradorOferta }

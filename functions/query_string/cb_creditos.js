@@ -23,8 +23,22 @@ const updateCreditos = () => {
     return query;
 }
 
+const getConfiguradorOferta = () => {
+    let query = `select
+    cantidad,
+    costo_total,
+    valor_untario,
+    tipo,
+    es_popular
+    from bd_analitica.cb_configurador_oferta
+    order by cantidad asc`;
+
+    return query;
+}
+
 module.exports = {
     getCreditosByRut,
     insertCreditos,
-    updateCreditos
+    updateCreditos,
+    getConfiguradorOferta
 }
