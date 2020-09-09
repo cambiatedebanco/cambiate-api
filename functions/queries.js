@@ -981,18 +981,21 @@ const insertCotizacion = (request, response) => {
             body.email, body.created_time, body.fecha, body.idbanco, body.deuda, body.archivo, body.timestamp, body.periodo,
             hipoteca, credito, tarjeta, arrBancos[i]
         ];
+        console.log(values);
+
+        return conn.executeQuery(queries_leads.cla_ceo_insert_cotizacion(), values)
+            .then(result => {
 
 
-        conn.executeQuery(queries_leads.cla_ceo_insert_cotizacion(), values, (error, result) => {
-            if (error) {
-                console.error(error);
-                return response.status(500).send('Problema con la consulta')
-            }
-            return response.status(200).json(result.rows)
+                return response.status(200).json(result.rows)
+            })
+            .catch(err => {
+                console.error(err);
+                throw new Error('Error al insertar simulación');
+            })
 
 
-            //Do something
-        });
+
 
         //Do something
     }
