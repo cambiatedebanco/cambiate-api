@@ -216,6 +216,8 @@ app.put('/cambiate_leads/asigna', endpoints_cambiate.updateAsignLeads);
 app.get('/cambiate/creditos', endpoints_cb_creditos.getCreditosByRut);
 app.put('/cambiate/creditos', endpoints_cb_creditos.updateCreditos);
 
+app.get('/cambiate/conf_oferta', endpoints_cb_creditos.getConfiguradorOferta);
+
 
 
 app.listen(port, () => {
