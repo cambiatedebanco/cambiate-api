@@ -36,9 +36,16 @@ const getConfiguradorOferta = () => {
     return query;
 }
 
+const updateCreditosTotal = () => {
+    let query = `update bd_analitica.cb_credito_compra SET credito_total = $1
+    where idusuario = $2`
+    return query;
+}
+
 module.exports = {
     getCreditosByRut,
     insertCreditos,
     updateCreditos,
-    getConfiguradorOferta
+    getConfiguradorOferta,
+    updateCreditosTotal
 }

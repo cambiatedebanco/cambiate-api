@@ -14,6 +14,7 @@ const queries_micartera = require('./query_string/cla_ceo_micartera');
 const queries_vista_usuario = require('./query_string/cla_ceo_vista_cartera');
 const { validationResult } = require('express-validator');
 const queries_cb_flow = require('./query_string/cb_flow')
+const queries_cb_creditos = require('./query_string/cb_creditos')
 
 
 const ROL_AGENTE = 2;
@@ -1786,12 +1787,12 @@ const getLeads_total = (request, response) => {
 }
 
 const create_order = async(req, res) => {
-    const { email, rut, rutint, monto } = req.body;
+    const { email, rut, monto, cantidad_monedas } = req.body;
 
     try {
-        const optional = {
+        const opt = {
             rut: rut,
-            rutInt: rutint
+            cantidad_monedas: cantidad_monedas
         };
         // Prepara el arreglo de datos
         const params = {
@@ -1803,7 +1804,7 @@ const create_order = async(req, res) => {
             paymentMethod: 9,
             urlConfirmation: config.baseURL_api + "/payment_confirm",
             urlReturn: config.baseURL_crm + "/success",
-            optional: optional
+            optional: JSON.stringify(opt)
 
         };
         // Define el metodo a usar
@@ -1842,16 +1843,21 @@ const payment_confirm = async(req, res) => {
         values = [
             body.flowOrder, body.commerceOrder, body.requestDate, body.status, body.subject, body.currency, body.amount, body.payer, body.merchantId, body.pending_info.media,
             body.pending_info.date, body.paymentData.date, body.paymentData.media, body.paymentData.conversionDate, body.paymentData.conversionRate, body.paymentData.amount, body.paymentData.currency,
-            body.paymentData.fee, body.paymentData.balance, body.paymentData.transferDate, body.optional, body.optional, body.paymentData.taxes
+            body.paymentData.fee, body.paymentData.balance, body.paymentData.transferDate, body.optional.rut, getRutInt(body.optional.rut), body.paymentData.taxes
         ]
 
-        await conn.executeQuery(queries_cb_flow.insert_payment(), values).then(result => {
-                return res.status(200).send(result.rows)
-            })
-            .catch(error => {
-                console.error(error);
-                return res.status(500).send('Algo salio mal')
-            })
+        try {
+            const insPay = await conn.executeQuery(queries_cb_flow.insert_payment(), values)
+            if (parseInt(body.status) === 2) {
+                const total = parseInt(body.optional.cantidad_monedas)
+                console.log('total ==> ', total);
+                const resultUpd = await conn.executeQuery(queries_cb_creditos.updateCreditosTotal(), [total, getRutInt(body.optional.rut)])
+            }
+            return res.status(200).send({ message: 'Ok!' })
+        } catch (error) {
+            return res.status(500).send('error')
+        }
+
 
     } catch (error) {
         res.json({ error });
@@ -2082,4 +2088,9 @@ function getValueOrEmptyString(param) {
     return typeof param === 'undefined' ?
         '' :
         param;
+}
+
+function getRutInt(param) {
+    var rut = String(param).replace('.', '').substring(0, String(rut).replace('.', '').length - 1);
+    return parseInt(rut)
 }
