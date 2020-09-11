@@ -42,10 +42,22 @@ const updateCreditosTotal = () => {
     return query;
 }
 
+const getTramoPrecio = () => {
+    let query = `select 
+    idtramo,
+    desde,
+    hasta,
+    precio
+    from bd_analitica.cb_tramo_precios order by idtramo`;
+
+    return query;
+}
+
 module.exports = {
     getCreditosByRut,
     insertCreditos,
     updateCreditos,
     getConfiguradorOferta,
-    updateCreditosTotal
+    updateCreditosTotal,
+    getTramoPrecio
 }

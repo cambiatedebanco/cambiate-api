@@ -1636,11 +1636,9 @@ const updateLead = (request, response) => {
             values.nuevo,
             values.gestionado,
             values.rut_colaborador,
-            values.comuna,
             values.email_colaborador,
             values.fecha_gestion,
             values.monto,
-            values.id_region,
             values.id
         ])
         .then(result => {
@@ -1792,7 +1790,7 @@ const create_order = async(req, res) => {
     try {
         const opt = {
             rut: rut,
-            cantidad_monedas: cantidad_monedas
+            monedas: cantidad_monedas
         };
         // Prepara el arreglo de datos
         const params = {
@@ -1849,7 +1847,7 @@ const payment_confirm = async(req, res) => {
         try {
             const insPay = await conn.executeQuery(queries_cb_flow.insert_payment(), values)
             if (parseInt(body.status) === 2) {
-                const total = parseInt(body.optional.cantidad_monedas)
+                const total = parseInt(body.optional.monedas)
                 console.log('total ==> ', total);
                 const resultUpd = await conn.executeQuery(queries_cb_creditos.updateCreditosTotal(), [total, getRutInt(body.optional.rut)])
             }
