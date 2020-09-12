@@ -18,7 +18,7 @@ const insertCreditos = () => {
 }
 
 const updateCreditos = () => {
-    let query = `update bd_analitica.cb_credito_compra SET credito_utilizado = $1
+    let query = `update bd_analitica.cb_credito_compra SET credito_total = 0, credito_utilizado = $1
     where idusuario = $2`
     return query;
 }
@@ -37,7 +37,7 @@ const getConfiguradorOferta = () => {
 }
 
 const updateCreditosTotal = () => {
-    let query = `update bd_analitica.cb_credito_compra SET credito_total = $1
+    let query = `update bd_analitica.cb_credito_compra SET credito_total = $1, credito_utilizado = 0
     where idusuario = $2`
     return query;
 }
