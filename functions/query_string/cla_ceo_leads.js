@@ -294,7 +294,8 @@ const getLeadByBanco = () => {
     on (l.monto >= t.desde and l.monto <= t.hasta)
     where l.destino = $1
     and l.activo = 1
-    and rut_colaborador is null`
+    and rut_colaborador is null
+    order by l.id desc`
 
 
     return query;

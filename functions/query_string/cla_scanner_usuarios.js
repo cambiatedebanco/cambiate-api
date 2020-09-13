@@ -48,7 +48,6 @@ const get_usuarios_por_agente = (rut) => {
 
 const delete_usuario = (rut) => {
     let query = `delete from "bd_analitica".cla_ceo_usuarios where rut = ${rut}`
-    console.log(query);
     return query;
 }
 
