@@ -53,11 +53,25 @@ const getTramoPrecio = () => {
     return query;
 }
 
+const getStatus = () => {
+    let query = `
+    SET TIME ZONE 'America/Santiago'
+    SELECT id, flow_order, commerce_order, status, subject, currency, amount, payer,
+    payment_date, payment_media, payment_amount, payment_currency,   rut
+       FROM bd_analitica.cb_flow_payment_order
+       where rutint=$1
+       order by id desc
+       limit 1;`
+
+    return query;
+}
+
 module.exports = {
     getCreditosByRut,
     insertCreditos,
     updateCreditos,
     getConfiguradorOferta,
     updateCreditosTotal,
-    getTramoPrecio
+    getTramoPrecio,
+    getStatus
 }

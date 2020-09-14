@@ -218,6 +218,7 @@ app.put('/cambiate/creditos', endpoints_cb_creditos.updateCreditos);
 
 app.get('/cambiate/conf_oferta', endpoints_cb_creditos.getConfiguradorOferta);
 app.get('/cambiate/tramo_precio', endpoints_cb_creditos.getTramoPrecio);
+app.post('/cambiate/success', endpoints_cb_creditos.getStatus);
 
 
 app.listen(port, () => {

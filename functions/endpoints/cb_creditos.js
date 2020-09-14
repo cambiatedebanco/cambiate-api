@@ -34,6 +34,7 @@ const getConfiguradorOferta = (request, response) => {
 }
 
 const getTramoPrecio = (request, response) => {
+
     conn.executeQuery(queries_cb_creditos.getTramoPrecio()).
     then(result => {
         return response.status(200).json(result.rows)
@@ -42,6 +43,16 @@ const getTramoPrecio = (request, response) => {
     })
 }
 
+const getStatus = (request, response) => {
+    let values = request.body;
+
+    conn.executeQuery(queries_cb_creditos.getStatus(), [values.rutint]).
+    then(result => {
+        return response.status(200).json(result.rows)
+    }).catch(error => {
+        return response.status(500).json(error)
+    })
+}
 
 
-module.exports = { getCreditosByRut, updateCreditos, getConfiguradorOferta, getTramoPrecio }
+module.exports = { getCreditosByRut, updateCreditos, getConfiguradorOferta, getTramoPrecio, getStatus }
