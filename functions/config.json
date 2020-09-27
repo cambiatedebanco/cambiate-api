@@ -3,6 +3,6 @@
     "secretKey": "144b5ca16ee8dd5e03bdf04242633b868a3109b4",
     "apiURL": "https://sandbox.flow.cl/api",
     "baseURL_api": "https://us-central1-graphite-maker-287716.cloudfunctions.net/apifenix/apiFlow",
-    "baseURL_crm": "https://cambiatedebanco.cl/#"
+    "baseURL_crm": "https://adm.cambiatedebanco.cl/#"
 
 }

@@ -55,7 +55,6 @@ const getTramoPrecio = () => {
 
 const getStatus = () => {
     let query = `
-    SET TIME ZONE 'America/Santiago'
     SELECT id, flow_order, commerce_order, status, subject, currency, amount, payer,
     payment_date, payment_media, payment_amount, payment_currency,   rut
        FROM bd_analitica.cb_flow_payment_order
