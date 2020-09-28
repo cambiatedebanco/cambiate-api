@@ -979,7 +979,7 @@ const insertCotizacion = (request, response) => {
         }
 
         let values = [body.rut, String(body.rut).substring(0, String(body.rut).length - 2), body.nombre, body.telefono,
-            body.email, body.created_time, body.fecha, body.idbanco, body.deuda, body.archivo, body.timestamp, body.periodo,
+            body.email, body.created_time, body.fecha, body.idbanco, String(body.deuda).replace(',', '').replace('.', ''), body.archivo, body.timestamp, body.periodo,
             hipoteca, credito, tarjeta, arrBancos[i]
         ];
         console.log(values);

@@ -1,7 +1,7 @@
 {
-    "apiKey": "468CFF5E-78B9-4EFC-B4C5-1L201A76688D",
-    "secretKey": "144b5ca16ee8dd5e03bdf04242633b868a3109b4",
-    "apiURL": "https://sandbox.flow.cl/api",
+    "apiKey": "344FD114-8E54-4892-B05B-933165A0ALF6",
+    "secretKey": "07bc14600c041b3bb6a96298ef3546cfa65deca1",
+    "apiURL": "https://www.flow.cl/api",
     "baseURL_api": "https://us-central1-graphite-maker-287716.cloudfunctions.net/apifenix/apiFlow",
     "baseURL_crm": "https://cambiatedebanco.cl/#"
 
