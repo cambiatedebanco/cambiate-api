@@ -1801,7 +1801,7 @@ const create_order = async(req, res) => {
             email: email,
             paymentMethod: 9,
             urlConfirmation: config.baseURL_api + "/payment_confirm",
-            urlReturn: config.baseURL_crm + "/success",
+            urlReturn: config.baseURL_crm + "/pago/success",
             optional: JSON.stringify(opt)
 
         };
