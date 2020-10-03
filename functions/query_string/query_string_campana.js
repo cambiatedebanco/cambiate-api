@@ -166,7 +166,7 @@ const getBancosAll = () => {
     let query = `SELECT idbanco, nombre
 FROM bd_analitica.cla_ceo_banco
 where esactivo=True 
-order by random()`;
+order by orden`;
     return query
 
 }
