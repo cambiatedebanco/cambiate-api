@@ -208,7 +208,7 @@ app.post("/apiFlow/create_email", db.create_email);
 
 app.get('/planes/:isapre/:tipo', db.getPlanes);
 app.get('/cla_bancos', db.getBancos);
-app.post('/cla_cotizacion', db.insertCotizacion);
+app.post('/cla_cotizacion', db.insertCotiza);
 
 app.get('/cambiate_leads/banco', endpoints_cambiate.getLeadByBanco);
 app.put('/cambiate_leads/asigna', endpoints_cambiate.updateAsignLeads);

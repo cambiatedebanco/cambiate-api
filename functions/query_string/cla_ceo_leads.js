@@ -5,9 +5,17 @@ const cla_ceo_insert_cotizacion = () => {
     let query = `insert into "bd_analitica".cla_ceo_micartera_campanas(rut, rutint, nombre, phone_number, email, created_time, fecha,  
           platform, origen, monto, ruta, "timestamp", periodo_carga, activo,hipoteca,credito,tarjeta,destino,idcampana)
     values ($1, $2, $3, $4, $5, $6, $7, 'cb', $8, $9,    
-        $10, $11, $12,   1,$13,$14, $15,$16,20) RETURNING *
+        $10, $11, $12,   1,$13,$14, $15,$16,20)
     `
 
+
+    return query;
+}
+
+const cla_ceo_insert_cotiza = (values) => {
+    let query = format(`insert into "bd_analitica".cla_ceo_micartera_campanas(rut, rutint, nombre, phone_number, email, created_time, fecha,  
+          platform, origen, monto, ruta, "timestamp", periodo_carga, hipoteca,credito,tarjeta,destino,idcampana)
+    values %L`, values)
 
     return query;
 }
@@ -331,5 +339,6 @@ module.exports = {
     getLeads_total,
     cla_ceo_insert_cotizacion,
     getLeadByBanco,
-    updateAsignLeads
+    updateAsignLeads,
+    cla_ceo_insert_cotiza
 }

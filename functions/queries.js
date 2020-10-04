@@ -960,8 +960,10 @@ const insertCotizacion = (request, response) => {
     let body = request.body;
     var arrBancos = body.bancos;
     var arrayLength = arrBancos.length;
-    console.log(arrayLength);
+    console.log('largo arreglo ==> ', arrayLength);
+
     for (var i = 0; i < arrayLength; i++) {
+        console.log('en iteración ==> ', i);
         let hipoteca = 0;
         let credito = 0;
         let tarjeta = 0;
@@ -984,21 +986,18 @@ const insertCotizacion = (request, response) => {
         ];
         console.log(values);
 
-        return conn.executeQuery(queries_leads.cla_ceo_insert_cotizacion(), values)
-            .then(result => {
+
+        conn.executeQuery(queries_leads.cla_ceo_insert_cotizacion(), values, (error, result) => {
+            if (error) {
+                console.error(error);
+                return response.status(500).send('Problema con la consulta')
+            }
+            return response.status(200).json(result.rows)
 
 
-                return response.status(200).json(result.rows)
-            })
-            .catch(err => {
-                console.error(err);
-                throw new Error('Error al insertar simulación');
-            })
+            //Do something
+        });
 
-
-
-
-        //Do something
     }
 
 
@@ -1006,6 +1005,24 @@ const insertCotizacion = (request, response) => {
     /* values = [body.rut,body.rutint, body.nombre,body.telefono,body.email,body.created_time,body.fecha, body.idbanco, body.deuda,body.archivo,body.timestamp,body.periodo,
          body.hipoteca, body.credito, body.tarjeta];
 */
+
+}
+
+const insertCotiza = (request, response) => {
+    const errors = validationResult(request)
+    if (!errors.isEmpty()) {
+        return response.status(422).json({ errors: errors.array })
+    }
+    let values = request.body;
+
+    conn.executeQuery(queries_leads.cla_ceo_insert_cotiza(values)).then(result => {
+            return response.status(200).send(result.rows)
+        })
+        .catch(error => {
+            console.error(error);
+            return response.status(500).send('Algo salio mal')
+        })
+
 
 }
 
@@ -2060,7 +2077,8 @@ module.exports = {
     create_email,
     getPlanes,
     getBancos,
-    insertCotizacion
+    insertCotizacion,
+    insertCotiza
 };
 
 function getDate(date) {
