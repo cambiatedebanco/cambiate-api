@@ -21,6 +21,21 @@ const cla_ceo_insert_cotiza = (values) => {
 }
 
 
+const getFechaActivacionSolicitud = () => {
+    let query = `select 
+    rutint, 
+    created_time + '15 days'::interval fecha_activacion
+    from 
+    bd_analitica.cla_ceo_micartera_campanas 
+    where rutint = $1
+    and fecha between to_char(timezone('America/Santiago',now()) - '15 days'::interval, 'YYYYMMDD')::integer 
+    and to_char(timezone('America/Santiago',now()), 'YYYYMMDD')::integer 
+    order by created_time desc
+    limit 1`
+
+    return query;
+}
+
 const getLeadsColaborador = (rut_colaborador, nuevo, gestionado, fechaInicio, fechaFin) => {
     let query = format(`select l.rut, l.rutint, l.nombre, l.phone_number, l.email, l.created_time, l.tipo_campana, 
     l.califica, l.monto, l.estado_base, l.monto_simulado, l.rut_colaborador, l.email_colaborador, l.star, l.id, 
@@ -340,5 +355,6 @@ module.exports = {
     cla_ceo_insert_cotizacion,
     getLeadByBanco,
     updateAsignLeads,
-    cla_ceo_insert_cotiza
+    cla_ceo_insert_cotiza,
+    getFechaActivacionSolicitud
 }

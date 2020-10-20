@@ -1026,6 +1026,16 @@ const insertCotiza = (request, response) => {
 
 }
 
+const getFechaActivacionSolicitud = (request, response) => {
+    let q = request.query.rut;
+    conn.executeQuery(queries_leads.getFechaActivacionSolicitud(), [q]).
+    then(result => {
+        return response.status(200).json(result.rows)
+    }).catch(error => {
+        return response.status(500).json(error)
+    })
+}
+
 const getColaboradoresByCampain = (request, response) => {
     let tipo = request.query.tipo;
     let idcampana = request.query.idcampana;
@@ -2078,7 +2088,8 @@ module.exports = {
     getPlanes,
     getBancos,
     insertCotizacion,
-    insertCotiza
+    insertCotiza,
+    getFechaActivacionSolicitud
 };
 
 function getDate(date) {
