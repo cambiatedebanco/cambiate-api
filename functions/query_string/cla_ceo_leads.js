@@ -14,7 +14,7 @@ const cla_ceo_insert_cotizacion = () => {
 
 const cla_ceo_insert_cotiza = (values) => {
     let query = format(`insert into "bd_analitica".cla_ceo_micartera_campanas(rut, rutint, nombre, phone_number, email, created_time, fecha,  
-          platform, origen, monto, ruta, "timestamp", periodo_carga, hipoteca,credito,tarjeta,destino,idcampana)
+          platform, origen, monto, ruta, "timestamp", periodo_carga, hipoteca,credito,tarjeta,destino,idcampana, monto_cursado)
     values %L`, values)
 
     return query;
@@ -305,19 +305,19 @@ const getLeadByBanco = () => {
     let query = `select
 	l.id, l.created_time,l.rut,l.nombre,l.comuna,l.id_region,l.phone_number,l.email,
     l.id_estado,l.monto_cursado,l.observaciones,l.rut_colaborador,l.email_colaborador,l.idcampana, 
-    c.nombre as nombre_campana, l.nuevo, l.gestionado, l.comuna, b.nombre nombre_banco, o.nombre banco_origen, l.monto, t.precio
-    from bd_analitica.cla_ceo_micartera_campanas l 
+    c.nombre as nombre_campana, l.nuevo, l.gestionado, l.comuna, b.nombre nombre_banco, o.nombre banco_origen, 
+	l.monto, l.monto_cursado, (pr.precio_fi + ROUND(l.monto * pr.precio_con) + ROUND(l.monto_cursado * pr.precio_hip) ) precio
+    from bd_analitica.cb_precio_referidos pr,
+	bd_analitica.cla_ceo_micartera_campanas l 
 	inner join  bd_analitica.cla_ceo_campana c
 	on (l.idcampana = c.idcampana)
 	inner join  bd_analitica.cla_ceo_banco b
 	on (l.destino = b.idbanco)
 	inner join  bd_analitica.cla_ceo_banco o
     on (l.origen::integer = o.idbanco)
-    inner join bd_analitica.cb_tramo_precios t 
-    on (l.monto >= t.desde and l.monto <= t.hasta)
     where l.destino = $1
     and l.activo = 1
-    and rut_colaborador is null
+    and l.rut_colaborador is null
     order by l.id desc`
 
 
