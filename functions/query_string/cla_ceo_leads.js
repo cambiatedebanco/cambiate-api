@@ -39,7 +39,7 @@ const getFechaActivacionSolicitud = () => {
 const getLeadsColaborador = (rut_colaborador, nuevo, gestionado, fechaInicio, fechaFin) => {
     let query = format(`select l.rut, l.rutint, l.nombre, l.phone_number, l.email, l.created_time, l.tipo_campana, 
     l.califica, l.monto, l.estado_base, l.monto_simulado, l.rut_colaborador, l.email_colaborador, l.star, l.id, 
-    c.nombre as nombre_campana, l.id_estado, l.nuevo, l.gestionado, l.comuna
+    c.nombre as nombre_campana, l.id_estado, l.nuevo, l.gestionado, l.comuna, l,monto_cursado
     from bd_analitica.cla_ceo_micartera_campanas l inner join  bd_analitica.cla_ceo_campana c
 	on (l.idcampana = c.idcampana) 
     where 
@@ -112,7 +112,7 @@ const getLeadById = () => {
     let query = `select
 	l.id, l.created_time,l.rut,l.nombre,l.comuna,l.id_region,l.phone_number,l.email,
     l.id_estado,l.monto,l.observaciones,l.rut_colaborador,l.email_colaborador,l.idcampana, 
-    c.nombre as nombre_campana, l.nuevo, l.gestionado, l.comuna, l.timestamp, l.rutint
+    c.nombre as nombre_campana, l.nuevo, l.gestionado, l.comuna, l.timestamp, l.rutint, l.monto_cursado, l.ruta
     from bd_analitica.cla_ceo_micartera_campanas l inner join  bd_analitica.cla_ceo_campana c
 	on (l.idcampana = c.idcampana)
     where l.id = $1
@@ -214,7 +214,8 @@ const updateLead = () => {
     let query = `update "bd_analitica".cla_ceo_micartera_campanas set 
       id_estado = $1, email = $2, nombre = $3, phone_number = $4, rut = $5,
       observaciones = $6, nuevo = $7, gestionado = $8, rut_colaborador = $9, 
-      email_colaborador = $10, fecha_gestion = $11, monto = $12, accion = 'U'
+      email_colaborador = $10, fecha_gestion = $11, monto = $12, accion = 'U',
+      monto_cursado = $14
      where id = $13`
 
     return query;

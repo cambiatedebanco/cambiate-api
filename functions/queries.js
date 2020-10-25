@@ -1666,7 +1666,8 @@ const updateLead = (request, response) => {
             values.email_colaborador,
             values.fecha_gestion,
             values.monto,
-            values.id
+            values.id,
+            values.monto_cursado
         ])
         .then(result => {
             return response.status(200).send(result.rows)
@@ -1817,12 +1818,12 @@ const create_order = async(req, res) => {
     try {
         const opt = {
             rut: rut,
-            monedas: cantidad_monedas
+            fondos: cantidad_monedas
         };
         // Prepara el arreglo de datos
         const params = {
             commerceOrder: Math.floor(Math.random() * (2000 - 1100 + 1)) + 1100,
-            subject: "Pago Compra de Créditos",
+            subject: "Recarga de Fondos",
             currency: "CLP",
             amount: monto,
             email: email,
@@ -1874,7 +1875,7 @@ const payment_confirm = async(req, res) => {
         try {
             const insPay = await conn.executeQuery(queries_cb_flow.insert_payment(), values)
             if (parseInt(body.status) === 2) {
-                const total = parseInt(body.optional.monedas)
+                const total = parseInt(body.optional.fondos)
                 console.log('total ==> ', total);
                 const resultUpd = await conn.executeQuery(queries_cb_creditos.updateCreditosTotal(), [total, getRutInt(body.optional.rut)])
             }
