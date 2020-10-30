@@ -222,6 +222,8 @@ app.get('/cambiate/conf_oferta', endpoints_cb_creditos.getConfiguradorOferta);
 app.get('/cambiate/tramo_precio', endpoints_cb_creditos.getTramoPrecio);
 app.post('/cambiate/success', endpoints_cb_creditos.getStatus);
 
+app.post('/cambiate/bancos_users', db.getUserByBank);
+
 
 app.listen(port, () => {
     console.log(`App running on port ${port}.`);

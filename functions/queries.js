@@ -1974,7 +1974,17 @@ const getPlanes = (request, response) => {
 
 };
 
+const getUserByBank = (request, response) => {
+    let values = request.body;
 
+    conn.executeQuery(queries_campana.getUserByBank(values)).then(result => {
+            return response.status(200).send(result.rows)
+        })
+        .catch(error => {
+            console.error(error);
+            return response.status(500).send('Algo salio mal')
+        })
+}
 
 
 module.exports = {
@@ -2090,7 +2100,8 @@ module.exports = {
     getBancos,
     insertCotizacion,
     insertCotiza,
-    getFechaActivacionSolicitud
+    getFechaActivacionSolicitud,
+    getUserByBank
 };
 
 function getDate(date) {

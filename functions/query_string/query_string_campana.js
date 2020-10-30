@@ -171,6 +171,14 @@ order by orden`;
 
 }
 
+const getUserByBank = (values) => {
+    let query = format(`select nombres, lower(email) email
+    from bd_analitica.cla_ceo_usuarios 
+    where idbanco in (%L)`, values);
+
+    return query;
+}
+
 module.exports = {
     getAll,
     getById,
@@ -195,5 +203,6 @@ module.exports = {
     updateLeadsByColaborador,
     getCampanasBySupervisor,
     getBancos,
-    getBancosAll
+    getBancosAll,
+    getUserByBank
 }
